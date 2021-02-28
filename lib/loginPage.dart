@@ -1,5 +1,8 @@
 import 'package:csi_trial_2/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'Models/appState.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -14,6 +17,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+    final appState = Provider.of<AppState>(context);
     // TODO: implement build
     return Container(
       decoration: BoxDecoration(
@@ -23,6 +28,12 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(appState.username,
+              style: TextStyle(
+                fontSize: 25,
+              ),
+
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -34,6 +45,9 @@ class _LoginState extends State<Login> {
                     width: 200,
                     child: TextField(
                       controller: userNameController,
+                      onChanged: (changedValue){
+                        appState.setUsername(changedValue);
+                      },
                     ))
               ],
             ),
@@ -75,6 +89,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   print(userNameController.text);
                   print(passwordController.text);
+                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
